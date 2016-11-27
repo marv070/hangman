@@ -33,7 +33,7 @@ class Hangman
 
 	def update_progress(choice)
 		(0...@word.length).zip(@word.scan(/\w/)) do |index,letter|
-			  letter == choice ? @progress[index] = letter : false
+			  letter == choice ? @progress[index] = letter.upcase : false
 		 end
 		@progress
 	end
@@ -61,7 +61,7 @@ class Hangman
 	end
 
 	def winner?
-		@progress == @word
+		@progress.upcase == @word.upcase
 	end
 
 end
