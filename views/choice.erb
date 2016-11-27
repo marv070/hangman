@@ -1,0 +1,22 @@
+<center><h2> What you have so far <%=current_progress%></h2><br>
+<h2> Letters you have already guessed --> <%=all_letters_guessed%></h2><br>
+<h2> You have <%=chances_left%> chances left to guess the word!!</h2><br>
+<h3>Please enter a valid letter that has not been picked yet.</h3>
+<form method="post" action="choice">
+	<input type="text" name="choice" pattern="[A-Za-z]" maxlength="1" autofocus="autofocus" required>
+	<input type="submit">
+</form>
+
+<% if chances_left == 5 %>
+<img class= "loser" src= "/img/head.jpeg">
+<% elsif chances_left == 4 %>
+<img class= "loser" src= "/img/head_and_body.jpeg">
+<% elsif chances_left == 3 %>
+<img class= "loser" src= "/img/head_body_one_arm.jpeg">
+<% elsif chances_left == 2 %>
+<img class= "loser" src= "/img/head_both_arms.jpeg">
+<% elsif chances_left == 1 %>
+<img class= "loser" src= "/img/leg2.jpeg">
+<h1>LAST CHANCE, MAKE IT COUNT!!!</H1>
+<%end%>
+</center>
