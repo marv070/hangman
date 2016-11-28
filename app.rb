@@ -11,7 +11,7 @@ post '/setup' do
 	word = params[:key_word]
 	session[:play] = Hangman.new(word)
 
-	 redirect '/choice'
+	  redirect '/choice'
 end
 
 get '/auto_word' do 
@@ -35,7 +35,8 @@ get '/choice' do
 end
 
 post '/choice' do
-	choice = params[:choice]
+	choice = params[:choice].downcase
+	
 	if session[:play].already_guessed?(choice) == true
 	 	redirect '/choice'
 	end
