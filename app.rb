@@ -4,6 +4,8 @@ require_relative 'hangman.rb'
 enable :sessions
 
 get'/' do
+	session[:play] = nil
+
 	erb :hang_word
 end
 
