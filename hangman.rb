@@ -1,5 +1,5 @@
 class Hangman
-	
+require 'csv'	
 	attr_accessor :chances, :word, :already_guessed, :progress
 
 	def initialize(word)
@@ -62,6 +62,18 @@ class Hangman
 
 	def winner?
 		@progress.upcase == @word.upcase
+	end
+
+	def write_to_csv(file, name, keyword, win, date_time) 
+		CSV.open(file, "a") do |csv|
+  		csv << ["#{name}" + ", " + "#{keyword}" + ", " + "#{win}" + ", " + "#{date_time}"]
+		end
+	end
+
+	def read_from_csv(csv_file_to_read)
+		# game.write_to_csv("test_summary.csv", name, keyword, win, date_time)
+		file = File.open(csv_file_to_read,"r")
+		csv = CSV.parse(file)
 	end
 
 end

@@ -1,4 +1,5 @@
 require 'sinatra'
+
 require_relative 'hangman.rb'
 
 enable :sessions
@@ -12,8 +13,8 @@ end
 post '/setup' do 
 	word = params[:key_word]
 	session[:play] = Hangman.new(word)
-
-	  redirect '/choice'
+	session[:name] = params[:username].upcase
+	   redirect '/choice'
 end
 
 get '/auto_word' do 
@@ -32,21 +33,25 @@ get '/choice' do
 	current_progress = session[:play].show_progress
 	all_letters_guessed = session[:play].show_all_guesses.upcase
 	
-	erb :choice, :locals => { :chances_left => chances_left, :current_progress => current_progress, :all_letters_guessed => all_letters_guessed}
+	erb :choice, :locals => { :chances_left => chances_left, :current_progress => current_progress, :all_letters_guessed => all_letters_guessed, :name => session[:name]}
 
 end
 
 post '/choice' do
 	choice = params[:choice].downcase
-	
+	date_time = DateTime.now
+	file = "test_summary.csv"
 	if session[:play].already_guessed?(choice) == true
 	 	redirect '/choice'
 	end
 	session[:play].make_move(choice)
 		if session[:play].winner?
-	   		redirect '/winner'
+	   		session[:play].write_to_csv(file, session[:name],session[:play].word, session[:play].winner?, date_time)
+
+	   		 redirect '/winner'
 		elsif 
 			session[:play].loser?
+			session[:play].write_to_csv("test_summary.csv", session[:name],session[:play].word, session[:play].winner?, date_time)
 			redirect '/loser'
 		else
 			redirect '/choice'

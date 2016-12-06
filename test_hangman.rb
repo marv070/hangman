@@ -72,20 +72,20 @@ class TestHangMan <Minitest::Test
 	def test_update_correct_space_within_progress_with_guessed_letter
 		game = Hangman.new("pizza")
 		choice = "p"
-		assert_equal("p____", game.update_progress(choice))
+		assert_equal("P____", game.update_progress(choice))
 	end
 
 	def test_update_correct_space_within_progress_with_guessed_letter2
 		game = Hangman.new("pizza")
 		choice = "i"
-		assert_equal("_i___", game.update_progress(choice))
+		assert_equal("_I___", game.update_progress(choice))
 	end
 
 
 	def test_update_multiply_correct_spaces_within_progress_with_guessed_letter
 		game = Hangman.new("pizza")
 		choice = "z"
-		assert_equal("__zz_", game.update_progress(choice))
+		assert_equal("__ZZ_", game.update_progress(choice))
 	end
 
 
@@ -160,5 +160,21 @@ class TestHangMan <Minitest::Test
 		game.chances = 1
 		assert_equal(0, game.update_chances_left)
 	end
+
+	def test_that_csv_file_updates_with_win
+		game = Hangman.new("pizza")
+		# name = "MARVIN"
+		# keyword = "pizza"
+		# win = "true"
+		# date_time = "2016-12-06T08:32:20-05:00"
+		 file = "test_summary.csv"
+		# game.write_to_csv(file, name, keyword, win, date_time)
+		results = game.read_from_csv(file)
+		
+		assert_equal(["MARVIN, pizza, true, 2016-12-06T08:32:20-05:00"], results[2])
+		assert_equal(["MARVIN, snow, true, 2016-12-06T12:09:38-05:00"], results[10])
+	    assert_equal(["TRUMP, tree, true, 2016-12-06T14:22:09-05:00"], results[23])
+	end
+
 
 end
